@@ -1,3 +1,6 @@
+from openai import OpenAI
+
+
 from telegram import (
     Update,
 )
@@ -40,10 +43,7 @@ async def talk(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
     # чтобы тут обрабатывались 5 рандомных фраз
     else:
-        await context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text=text,
-        )
+        
     return TALK
 
 async def talk_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
