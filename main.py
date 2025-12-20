@@ -1,84 +1,29 @@
 import logging
+import os
 from telegram import (
     Update,
-    ReplyKeyboardMarkup,
-    KeyboardButton,
     InlineKeyboardButton,
-    InlineKeyboardMarkup,
 )
 from telegram.ext import (
     ApplicationBuilder,
-    ContextTypes,
     CommandHandler,
     MessageHandler,
     filters,
     ConversationHandler,
-    CallbackQueryHandler
+    CallbackQueryHandler,
 )
 from config.config import TELEGRAM_TOKEN
-from handlers.biba_handlers import biba, say_boba, say_biba
 from handlers.talk_handlers import talk_start, talk, say_contact
 from handlers.start_handlers import start
-from config.states import MAINMENU, TALK, BIBA, GAME, GUESS_NUMBER
-import random
+from config.states import MAINMENU, TALK, GUESS_NUMBER
+from handlers.guess_handlers import guess_number_start, guess_number
 from random import randint
-
 
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     level=logging.INFO,
 )
-
-MAINMENU, TALK, BIBA, GAME, GUESS_NUMBER = range(5)
-
-
-# callback
-
-
-
-
-
-
-
-
-async def game_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    chisl = random.randint(1,99)
-    guess_chisl = int(input("я загадал число от 1 до 99,попробуй его угадать!"))
-    if guess_chisl == chisl:
-        await context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text="ты угадал,молодец!")
-    elif guess_chisl.isdigit == False :
-        await context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text="напиши число пожалуйста")
-    else:
-        await context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text="хорошая попытка,попробуй еще раз!")
-
-    return GAME 
-
-async def guess_number_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text="привет,в этой игре тебе надо будет загадать число,а я буду его угадывать.Только честно!")
-    keyboard = [["больше"], ["меньше"], ["угадал"]]
-    markup = ReplyKeyboardMarkup(keyboard)
-    await context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text="50?",
-        reply_markup=markup
-    )
-    return GUESS_NUMBER
-
-async def guess_number(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
-    
-    return GUESS_NUMBER
-
-
 
 
 if __name__ == "__main__":
@@ -92,24 +37,18 @@ if __name__ == "__main__":
         entry_points=[CommandHandler("start", start)],
         states={
             MAINMENU: [
-                CommandHandler("talk", talk_start),
-                CommandHandler("biba", biba),
-                CallbackQueryHandler(biba, pattern="biba"),
                 CallbackQueryHandler(talk_start, pattern="talk"),
-                CommandHandler("guess_game", guess_number_start),
-                CommandHandler("game", game_start)
+                CallbackQueryHandler(guess_number_start, pattern="guess_game"),
             ],
             TALK: [MessageHandler(filters.TEXT & ~filters.COMMAND, talk)],
-            BIBA: [
-                MessageHandler(filters.Regex("^биба$"), say_boba),
-                MessageHandler(filters.Regex("^боба$"), say_biba),
-                MessageHandler(filters.CONTACT, say_contact),
+            GUESS_NUMBER: [
+                MessageHandler(filters.TEXT & ~filters.COMMAND, guess_number),
+                CallbackQueryHandler(guess_number, pattern="start_game"),
+                CallbackQueryHandler(start, pattern="main_menu"),
             ],
-            GAME:[],
-            GUESS_NUMBER:[]
         },
-        fallbacks=[CommandHandler("start", start)]
-    )   
+        fallbacks=[CommandHandler("start", start)],
+    )
 
     application.add_handler(conv_handler)
 

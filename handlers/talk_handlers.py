@@ -1,4 +1,5 @@
 from openai import OpenAI
+client = OpenAI()
 
 
 from telegram import (
@@ -42,14 +43,47 @@ async def talk(update: Update, context: ContextTypes.DEFAULT_TYPE):
             text="Я могу с тобой поговорить и отправить бобу!",
         )
     # чтобы тут обрабатывались 5 рандомных фраз
-    else:
-        
-    return TALK
+    else:        
+        if len(context.user_data["previous_messages"]) > 6:
+            context.user_data["previous_messages"].pop(0)
+            context.user_data["previous_messages"].pop(0)
+        client = OpenAI()
+        response = client.responses.create(
+            model="gpt-5-mini",
+            reasoning={"effort": "medium"},
+            input=[
+                {
+                    "role": "developer",
+                    "content": 'Тебе отправляют название книги.Максимум 4000 символов.Составь подробный,логично структурированное саммари с ключевыми идеями, концепциями, примерами и выводами. Сделай текст лёгким для восприятия — используй ассоциации, списки, шаги или метафоры. Итоговое саммари должно быть ясным, последовательным и полностью отражать содержание книги',
+                },
+            ]
+            + context.user_data["previous_messages"]
+            + [
+                {
+                    "role": "user",
+                    "content": text,
+                }
+            ],
+        )
+        response_text = response.output_text
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=response_text,
+        )
+        context.user_data["previous_messages"].append(
+            {"role": "user", "content": text}
+        )
+        context.user_data["previous_messages"].append(
+            {"role": "assistant", "content": response_text}
+        )
+    
 
 async def talk_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    previous_messages = []
+    context.user_data["previous_messages"] = previous_messages
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text="Чтобы поговорить со мной, просто напиши любой текст."
+        text="Давай поговорим! Напиши мне что-нибудь."
     )
     return TALK
 
