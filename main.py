@@ -13,13 +13,13 @@ from telegram.ext import (
     CallbackQueryHandler,
 )
 from config.config import TELEGRAM_TOKEN
-from handlers.talk_handlers import talk_start, talk, say_contact
+from handlers.talk_handlers import talk_start, talk
 from handlers.start_handlers import start
-from config.states import MAINMENU, TALK, GUESS_NUMBER
+from config.states import MAINMENU, TALK, GUESS_NUMBER, TICTACTOE, TICTACTOE_ONLINE, TICTACTOE_BOT
 from handlers.guess_handlers import guess_number_start, guess_number
-from random import randint
-
-
+from handlers.tictactoe_handlers import tictactoe,tictactoe_start
+from handlers.ttt_online import tictactoe_online_start
+from handlers.ttt_bot import tictactoe_bot_start,tictactoe_bot
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     level=logging.INFO,
@@ -37,15 +37,27 @@ if __name__ == "__main__":
         entry_points=[CommandHandler("start", start)],
         states={
             MAINMENU: [
+                CallbackQueryHandler(start, pattern="main_menu"),
                 CallbackQueryHandler(talk_start, pattern="talk"),
                 CallbackQueryHandler(guess_number_start, pattern="guess_game"),
+                CallbackQueryHandler(tictactoe_start, pattern="tictactoe"),
             ],
             TALK: [MessageHandler(filters.TEXT & ~filters.COMMAND, talk)],
             GUESS_NUMBER: [
                 MessageHandler(filters.TEXT & ~filters.COMMAND, guess_number),
                 CallbackQueryHandler(guess_number, pattern="start_game"),
-                CallbackQueryHandler(start, pattern="main_menu"),
+                CallbackQueryHandler(start, pattern="main_menu"),],
+            TICTACTOE:  [
+            CallbackQueryHandler(tictactoe, pattern="^[0-8]$")
             ],
+            TICTACTOE_ONLINE: [
+                CallbackQueryHandler(
+                    tictactoe_online_start, pattern="tictactoe_online"
+                ),
+                CallbackQueryHandler(tictactoe_online_start, pattern="^[0-8]$")
+            ],
+            TICTACTOE_BOT: [CallbackQueryHandler(tictactoe_bot_start, pattern = "tictactoe_bot"),
+                            CallbackQueryHandler(tictactoe_bot, pattern="^[0-8]$")]
         },
         fallbacks=[CommandHandler("start", start)],
     )
