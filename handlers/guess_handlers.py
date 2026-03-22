@@ -6,6 +6,8 @@ from telegram import (
 )
 from telegram.ext import ContextTypes
 from config.states import GUESS_NUMBER
+from db.user_crud import update_amount_of_games
+from handlers.start_handlers import start
 
 
 async def guess_number_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -69,4 +71,6 @@ async def guess_number(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 text="Ура! Я угадал твоё число!",
                 reply_markup=markup,
             )
+            await update_amount_of_games(update.effective_user.id)
+            return await start(update, context)
     return GUESS_NUMBER
