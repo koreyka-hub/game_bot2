@@ -11,6 +11,7 @@ from telegram.ext import (
     filters,
     ConversationHandler,
     CallbackQueryHandler,
+     PicklePersistence,
 )
 from config.config import TELEGRAM_TOKEN
 from handlers.talk_handlers import talk_start, talk
@@ -38,10 +39,12 @@ logging.basicConfig(
 
 
 if __name__ == "__main__":
+    persistence = PicklePersistence("bot_cache")
     application = (
         ApplicationBuilder()
         .post_init(create_tables)
         .token(TELEGRAM_TOKEN)
+        .persistence(persistence)
         .build()
     )
     # handler - обработчик
@@ -77,6 +80,8 @@ if __name__ == "__main__":
             TICTACTOE_BOT: [CallbackQueryHandler(tictactoe_bot, pattern="^[0-8]$")],
         },
         fallbacks=[CommandHandler("start", start)],
+        persistent=True,
+        name="conv_handler",
     )
 
     application.add_handler(conv_handler)

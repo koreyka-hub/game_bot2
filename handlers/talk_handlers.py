@@ -1,7 +1,5 @@
 from openai import OpenAI
 client = OpenAI()
-
-
 from telegram import (
     Update,
 )
