@@ -2,6 +2,7 @@ from telegram import (
     Update,
     InlineKeyboardButton,
     InlineKeyboardMarkup,
+    WebAppInfo,
 )
 from telegram.ext import ContextTypes,ConversationHandler
 from config.states import MAINMENU,GET_AGE
@@ -34,6 +35,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         [InlineKeyboardButton("крестики нолики", callback_data="tictactoe")],
         [InlineKeyboardButton("крестики нолики с игроками", callback_data="online_tictactoe")],
         [InlineKeyboardButton("крестики нолики с ботом", callback_data="bot_tictactoe")],
+        [InlineKeyboardButton("информация обо мне", web_app=WebAppInfo('https://licensing-pressing-donna-sue.trycloudflare.com'))],
 
     ]
     markup = InlineKeyboardMarkup(keyboard)
