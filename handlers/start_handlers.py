@@ -24,7 +24,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return GET_AGE
     if user["age"] > 30:
         await context.bot.send_message(
-            chat_id=update.effective_chat.id, text="Атстань, Скуф!"
+            chat_id=update.effective_chat.id, text="Атстань, Скуф!!"
         )
         return ConversationHandler.END
 

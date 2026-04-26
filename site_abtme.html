@@ -1,0 +1,550 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Егор | Юный программист и спортсмен</title>
+  <!-- Элегантные классические шрифты -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (свободные иконки) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #fefaf5;
+      color: #2c2b28;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* типографика с классическим оттенком */
+    h1, h2, h3, .nav-links, .hero-subtitle, .quote-text, .footer-copyright {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    h1 {
+      font-size: 3.4rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #2c3e2f;
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      border-bottom: 2px solid #e2d4c4;
+      display: inline-block;
+      padding-bottom: 0.3rem;
+      margin-bottom: 2rem;
+      color: #3a5e40;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+      color: #4a6b41;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* шапка в классическом стиле */
+    .site-header {
+      background: #ffffffec;
+      backdrop-filter: blur(2px);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02), 0 1px 0 #e6ddd2;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: #2c3e2f;
+      letter-spacing: 1px;
+    }
+
+    .logo a:hover {
+      color: #b48c5c;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #4a4a44;
+      transition: color 0.2s, border-bottom 0.2s;
+      padding-bottom: 0.2rem;
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav-links a:hover {
+      color: #b48c5c;
+      border-bottom-color: #cfb592;
+    }
+
+    /* hero секция */
+    .hero {
+      padding: 3.5rem 0 3rem;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .avatar {
+      width: 130px;
+      height: 130px;
+      background: #e2d9cf;
+      border-radius: 50%;
+      margin: 0 auto 1.2rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      border: 3px solid #fff7ef;
+    }
+
+    .avatar i {
+      font-size: 3.8rem;
+      color: #6f4f37;
+      opacity: 0.75;
+    }
+
+    .hero-title {
+      font-size: 2.9rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: #6b5a4e;
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+
+    .hero-description {
+      font-size: 1rem;
+      color: #4e4c47;
+      max-width: 580px;
+      margin: 1rem auto 0;
+    }
+
+    /* секции */
+    section {
+      padding: 3.5rem 0;
+      border-bottom: 1px solid #efe5db;
+    }
+
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    /* карточка о себе в две колонки */
+    .about-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      align-items: flex-start;
+    }
+
+    .about-text {
+      flex: 2;
+      font-size: 1rem;
+      color: #3b3a36;
+    }
+
+    .about-text p {
+      margin-bottom: 1rem;
+    }
+
+    .info-panel {
+      flex: 1;
+      background: #fefaf5;
+      padding: 1.4rem;
+      border-radius: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      border: 1px solid #ece1d5;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .detail-item i {
+      width: 2rem;
+      color: #b48c5c;
+      font-size: 1.2rem;
+    }
+
+    /* навыки и увлечения в виде элегантных меток */
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+
+    .skill-badge {
+      background: #f3ede6;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #4a5b44;
+      border: 1px solid #e2d4c6;
+      transition: all 0.2s;
+    }
+
+    .skill-badge:hover {
+      background: #e8dfd4;
+      border-color: #cdbcab;
+    }
+
+    /* Секция увлечения (спорт, друзья, игры) */
+    .passion-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .passion-card {
+      background: white;
+      border-radius: 28px;
+      padding: 1.6rem 1.8rem;
+      flex: 1;
+      min-width: 180px;
+      text-align: center;
+      border: 1px solid #ece0d3;
+      box-shadow: 0 8px 14px rgba(0, 0, 0, 0.02);
+      transition: transform 0.2s;
+    }
+
+    .passion-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .passion-icon {
+      font-size: 2.8rem;
+      color: #a87b51;
+      margin-bottom: 1rem;
+    }
+
+    .passion-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    /* мои проекты / python примеры */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.8rem;
+      margin-top: 1rem;
+    }
+
+    .project-card {
+      background: white;
+      border-radius: 24px;
+      padding: 1.4rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.02);
+      border: 1px solid #f0e4d8;
+      transition: all 0.2s;
+    }
+
+    .project-card i {
+      font-size: 2rem;
+      color: #b48c5c;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .project-card h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0.5rem 0 0.3rem;
+    }
+
+    /* лицей и пушкин */
+    .school-highlight {
+      background: linear-gradient(135deg, #fffaf3 0%, #fef5ea 100%);
+      border-radius: 32px;
+      padding: 1.5rem 2rem;
+      margin-top: 1.5rem;
+      text-align: center;
+      border: 1px solid #e6d8ca;
+    }
+
+    .school-highlight i {
+      font-size: 2rem;
+      color: #b48c5c;
+      margin-right: 0.6rem;
+      vertical-align: middle;
+    }
+
+    /* контакты */
+    .contacts-flex {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.8rem;
+      margin-top: 1.8rem;
+    }
+
+    .contact-card {
+      background: #ffffffdd;
+      padding: 0.9rem 1.8rem;
+      border-radius: 48px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      transition: 0.2s;
+      border: 1px solid #e8dfd2;
+      text-decoration: none;
+      color: #2c3e2f;
+      font-weight: 500;
+    }
+
+    .contact-card i {
+      font-size: 1.5rem;
+      color: #9b7b5c;
+    }
+
+    .contact-card:hover {
+      background: #fff9f0;
+      border-color: #cfbaa1;
+      transform: scale(1.02);
+    }
+
+    /* footer */
+    .site-footer {
+      background: #f2ebe2;
+      padding: 1.8rem 0;
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: #5c5348;
+    }
+
+    /* адаптивность */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1.2rem;
+      }
+      .hero-title {
+        font-size: 2.3rem;
+      }
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+      .header-inner {
+        flex-direction: column;
+        align-items: center;
+      }
+      .nav-links {
+        gap: 1.2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      h2 {
+        font-size: 1.8rem;
+      }
+      .about-grid {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <a href="#">E.G.</a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#about">Обо мне</a></li>
+        <li><a href="#passions">Увлечения</a></li>
+        <li><a href="#python">Python</a></li>
+        <li><a href="#school">Лицей</a></li>
+        <li><a href="#contact">Контакты</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <!-- Герой -->
+    <div class="hero">
+      <div class="container hero-content">
+        <div class="avatar">
+          <i class="fas fa-code"></i>
+        </div>
+        <h1 class="hero-title">Егор</h1>
+        <p class="hero-subtitle">14 лет · Программист · Спортсмен</p>
+        <p class="hero-description">
+          «Код, штанга, друзья и видеоигры — мои верные спутники. Создаю, развиваюсь и не стою на месте.»
+        </p>
+      </div>
+    </div>
+
+    <!-- Обо мне -->
+    <section id="about">
+      <div class="container">
+        <h2>Обо мне</h2>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>Привет! Меня зовут Егор, мне 14 лет. С ранних лет меня привлекала логика и возможность создавать что-то своими руками на компьютере, поэтому я начал изучать <strong>Python</strong>. Это не просто язык программирования, а инструмент для воплощения идей — от простых ботов до небольших игр и анализа данных.</p>
+            <p>Я учусь в лицее №6 имени Александра Сергеевича Пушкина, где стараюсь совмещать учебу с любимыми делами. Обожаю точные науки и нахожу вдохновение в энергичных занятиях спортом.</p>
+            <p>Спортзал стал для меня местом силы: регулярные тренировки помогают держать дисциплину и баланс. А в свободное время я с удовольствием встречаюсь с друзьями или погружаюсь в мир видеоигр — это отличный способ отдохнуть и разделить эмоции с близкими.</p>
+          </div>
+          <div class="info-panel">
+            <div class="detail-item"><i class="fas fa-user-graduate"></i> <span>Ученик 8-го класса</span></div>
+            <div class="detail-item"><i class="fas fa-map-marker-alt"></i> <span>Россия, г. Пушкин / Санкт-Петербург</span></div>
+            <div class="detail-item"><i class="fas fa-laptop-code"></i> <span>Python — основной язык</span></div>
+            <div class="detail-item"><i class="fas fa-dumbbell"></i> <span>Тренажёрный зал 3-4 раза в неделю</span></div>
+            <div class="detail-item"><i class="fas fa-gamepad"></i> <span>Игры с друзьями (кооперативы, стратегии)</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Увлечения (спорт, друзья, игры) -->
+    <section id="passions">
+      <div class="container">
+        <h2>Мои увлечения</h2>
+        <div class="passion-grid">
+          <div class="passion-card">
+            <div class="passion-icon"><i class="fas fa-dumbbell"></i></div>
+            <h3>Спорт и сила</h3>
+            <p>Регулярные занятия в зале: тяги, жимы, база. Спорт воспитывает характер и помогает яснее мыслить за кодом.</p>
+          </div>
+          <div class="passion-card">
+            <div class="passion-icon"><i class="fas fa-users"></i></div>
+            <h3>Друзья рядом</h3>
+            <p>Общение, прогулки, совместные проекты — друзья вдохновляют и делают каждый день ярче.</p>
+          </div>
+          <div class="passion-card">
+            <div class="passion-icon"><i class="fas fa-headset"></i></div>
+            <h3>Видеоигры</h3>
+            <p>От стратегий до приключений — игры объединяют, развивают реакцию и стратегическое мышление.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Python и программирование -->
+    <section id="python">
+      <div class="container">
+        <h2>Python & программирование</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <i class="fab fa-python"></i>
+            <h4>Первые шаги</h4>
+            <p>Изучаю синтаксис, алгоритмы, работу с файлами и API. Пишу небольшие утилиты и парсеры.</p>
+          </div>
+          <div class="project-card">
+            <i class="fas fa-robot"></i>
+            <h4>Telegram-боты</h4>
+            <p>Создал нескольких ботов: погода, викторины, напоминалки. Люблю автоматизировать рутину.</p>
+          </div>
+        </div>
+        <div class="skills-list" style="margin-top: 1.5rem;">
+          <span class="skill-badge">Python </span>
+          <span class="skill-badge">Основы Git</span>
+          <span class="skill-badge">HTML/CSS</span>
+          <span class="skill-badge">PyGame (начальный уровень)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Лицей имени Пушкина -->
+    <section id="school">
+      <div class="container">
+        <h2>Лицей №6 имени А.С. Пушкина</h2>
+        <div class="school-highlight">
+          <i class="fas fa-landmark"></i> <strong>«Вдохновение и знания»</strong>
+          <p style="margin-top: 0.6rem;">Лицей с углублённым изучением гуманитарных и точных наук. Здесь я не только получаю отличное образование, но и участвую в олимпиадах, проектной деятельности. Атмосфера творчества, имени великого поэта и традиции классической школы помогают мне расти.</p>
+          <p style="margin-top: 0.8rem; font-size: 0.9rem;"><i class="fas fa-quote-left"></i> «Учиться — значит открывать мир заново»</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.2rem; justify-content: center;">
+          <span class="skill-badge"><i class="fas fa-star"></i> Успехи в информатике</span>
+          <span class="skill-badge"><i class="fas fa-futbol"></i> Спортивные секции лицея</span>
+          <span class="skill-badge"><i class="fas fa-palette"></i> Участие в проектах</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Контакты / соцсети -->
+    <section id="contact">
+      <div class="container">
+        <h2>Давайте общаться</h2>
+        <div class="contacts-flex">
+          <a href="#" class="contact-card">
+            <i class="fab fa-telegram-plane"></i> <span>+79252257063</span>
+          </a>
+          <a href="#" class="contact-card">
+            <i class="fab fa-github"></i> <span>https://github.com/koreyka-hub</span>
+          </a>
+          <a href="mailto:egor.python@example.com" class="contact-card">
+            <i class="fas fa-envelope"></i> <span>pobyazok@gmail.com</span>
+          </a>
+        </div>
+        <div style="text-align: center; margin-top: 2.2rem; font-style: italic; color: #6b5e52;">
+          <i class="fas fa-comment"></i>  Всегда рад новым знакомствам и идеям для проектов. Пиши!
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-copyright">
+        © 2025 Егор | Программирование, спорт и лицей имени Пушкина
+      </div>
+      <div style="margin-top: 0.3rem; font-size: 0.75rem;">
+        <i class="fas fa-code"></i>  «Код — это поэзия логики»
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
